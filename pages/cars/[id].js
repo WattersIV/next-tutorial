@@ -4,32 +4,49 @@ import styles from '../../styles/Home.module.css'
 
 export default function Car({ car }) {
 
-    const router = useRouter()
-    const { id } = router.query
-    return (
-        <div className={styles.container}>
-            <Head>
-                <title>{car.color} {car.id}</title>
-            </Head>
+  const router = useRouter()
+  const { id } = router.query
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>{car.color} {car.id}</title>
+      </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    {id}
-                </h1>
+      <main className={styles.main}>
+        <h1 className={styles.title}>
+          {id}
+        </h1>
 
-                <img src={car.image} width="300px" />
+        <img src={car.image} width="300px" />
 
-            </main>
-        </div>
-    )
+      </main>
+    </div>
+  )
 }
 
+export async function getStaticPaths({ params }) {
+  const req = await fetch('http://localhost:3000/cars.json')
+  const data = await req.json() 
 
-export async function getServerSideProps({ params }) {
-    const req = await fetch(`http://localhost:3000/${params.id}.json`);
-    const data = await req.json();
-
+  const paths = data.map((car)=> {
     return {
-        props: { car: data },
+      params: {
+        id: car
+      }
     }
+  })
+
+  return {
+    paths, 
+    fallback: false
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const req = await fetch(`http://localhost:3000/${params.id}.json`);
+  const data = await req.json();
+
+  return {
+    props: { car: data },
+  }
 }
