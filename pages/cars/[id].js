@@ -24,7 +24,7 @@ export default function Car({ car }) {
   )
 }
 
-export async function getStaticPaths({ params }) {
+export async function getStaticPaths() {
   const req = await fetch('http://localhost:3000/cars.json')
   const data = await req.json() 
 
@@ -43,6 +43,7 @@ export async function getStaticPaths({ params }) {
 }
 
 export async function getStaticProps({ params }) {
+  //context is the outter obj that gets passed to this function which contains params obj
   const req = await fetch(`http://localhost:3000/${params.id}.json`);
   const data = await req.json();
 
