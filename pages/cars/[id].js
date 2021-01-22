@@ -9,9 +9,9 @@ export default function Car(props) {
   const { id } = router.query
 
   //If page is not pre rendered but exists this is returned while it loads
-  if (router.isFallback) {
-    return <div>Loading ...</div>
-  }
+  // if (router.isFallback) {
+  //   return <div>Loading ...</div>
+  // }
 
   return (
     <div className={styles.container}>
@@ -35,19 +35,23 @@ export async function getStaticPaths() {
   const req = await fetch('http://localhost:3000/cars.json')
   const data = await req.json()
 
-  // const paths = data.map((car) => {
-  //   return {
-  //     params: {
-  //       id: car
-  //     }
-  //   }
-  // })
+  const paths = data.map((car) => {
+    return {
+      params: {
+        id: car
+      }
+    }
+  })
 
-  //console.log(paths)
+
+  // return {
+  //   paths: [{params: {id: 'tesla'}}],
+  //   fallback: true
+  // }
 
   return {
-    paths: [{params: {id: 'tesla'}}],
-    fallback: true
+    paths, 
+    fallback: false
   }
 }
 
