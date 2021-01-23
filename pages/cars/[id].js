@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
+import { Button } from '@material-ui/core'
 
 export default function Car(props) {
   const { car } = props
@@ -13,12 +14,14 @@ export default function Car(props) {
   //   return <div>Loading ...</div>
   // }
 
-  return (
+  return ( 
     <div className={styles.container}>
       <Head>
         <title>{car.color} {car.id}</title>
       </Head>
-
+      <Button variant='contained' color='secondary' size='small' href='http://localhost:3000/cars'> 
+        Go Back
+      </Button>
       <main className={styles.main}>
         <h1 className={styles.title}>
           {id}
